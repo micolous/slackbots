@@ -327,13 +327,13 @@ class RegexBotProtocol(RtmProtocol):
 
 		if response is not None:
 			if isinstance(response, str) or isinstance(response, unicode):
-				self.sendChatMessage(response, id=event.channel, username=u'regexbot', link_names=False)
+				self.sendChatMessage(response, id=event.channel)
 			else:
 				# Returns tuple of message, user_id
 				# Resolve the UserID and post as them. ;)
 				user = self.meta.users.get(response[1], None)
 				if user is None:
-					self.sendChatMessage(response, id=event.channel, username=u'regexbot', link_names=False)
+					self.sendChatMessage(response, id=event.channel)
 				else:
 					self.sendChatMessage(response[0], id=event.channel, username=u'%s (regexbot)' % user['name'], icon_url=user['profile']['image_48'])
 
@@ -342,6 +342,11 @@ class RegexBotProtocol(RtmProtocol):
 		kwargs['send_with_api'] = True
 		kwargs['unfurl_links'] = False
 		kwargs['unfurl_media'] = False
+		if 'username' not in kwargs:
+			kwargs['username'] = 'regexbot'
+		kwargs['link_names'] = False
+		if 'icon_url' not in kwargs and 'icon_emoji' not in kwargs:
+			kwargs['icon_emoji'] = ':camel:'
 		return RtmProtocol.sendChatMessage(self, *args, **kwargs)
 
 
