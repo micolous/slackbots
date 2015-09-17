@@ -20,7 +20,7 @@ This is a Slack port of the original, IRC based version (which predates Slack).
 """
 
 
-import regex, asyncore, threading, inspect, ctypes, time
+import regex, threading, inspect, ctypes, time
 from argparse import ArgumentParser
 from copy import copy
 from datetime import datetime, timedelta
